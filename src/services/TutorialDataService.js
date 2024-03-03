@@ -21,8 +21,22 @@ createTutorial(data)
 {
     //ilgili servise göndermiş olduğumuz json objesi 
     //backend servisinde nesneye dönüştürülüp database yazılıyor
-    //database yazıldıktan sonra bize yine json olarak döndürülüyor
+    //database ilgili tutorial yazıldıktan sonra bize yine json olarak döndürülüyor
     return http.post("/tutorials",data);
+}
+
+updateTutorial(id,data)
+{
+    return http.put(`/tutorials/${id}`,data);
+}
+
+deleteTutorial(id)
+{
+    return http.delete(`/tutorials/${id}`);
+}
+
+findByTitle(title){
+    return http.get(`/tutorials?title=${title}`);
 }
 
 }

@@ -17,7 +17,8 @@
             required name="description" />
         </div>
         <br />
-        
+        <button class="btn btn-success" @click="tutorialGuncelle">Güncelle </button>
+         <button class="btn btn-danger" @click="tutorialSil">Sil </button>
     </div>
 </template>
 <script>
@@ -35,7 +36,32 @@ export default {
             //{"id":id,"title":"testtest","description":"testtestdesc","published":false}
             this.guncellenecekTutorial = gelenTutorial.data;
         })
-      }
+      },
+      tutorialGuncelle()
+      {
+        console.log("guncellenecek tutorial id: "+this.guncellenecekTutorial.id);
+        console.log("guncellenecek tutorial data: "+this.guncellenecekTutorial);
+        TutorialDataService.updateTutorial(this.guncellenecekTutorial.id,this.guncellenecekTutorial)
+        .then(guncellenmisTutorial => {
+            console.log(guncellenmisTutorial.data);
+            this.$router.push({ name: "tutorials" });
+        }).catch(hata => {
+            console.log("hata oluştu : " +hata);
+        });
+    },
+
+    tutorialSil()
+    {
+        if(confirm("Silmek istediğinizden emin misiniz?") == true){
+            TutorialDataService.deleteTutorial(this.guncellenecekTutorial.id).then(response => {
+            console.log(response);
+            this.$router.push({ name: "tutorials" });
+        });
+        }else{
+            console.log("Silme gerçekleşmedi")
+        }
+
+    }
     },
     mounted() {
         //bana bir önceki yani tutoriaListteki tıklamış olduğum tutorial ın id si gelecek
